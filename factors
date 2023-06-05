@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# is a factors challenge
+# factors challenge
 
 check_factor()
 {
@@ -7,30 +7,30 @@ check_factor()
         then
                 args=("$@")
                 count=0
-                num2=1
+                n2=1
                 for a in ${args[*]};
                 do
                         if [ $count -gt 1 ];
                         then
-                                num2=$(echo $a*$num2 | bc)
+                                n2=$(echo $a*$n2 | bc)
                         fi
                         count=$((count + 1))
                 done
         else
-                num2=$3
+                n2=$3
         fi
 
-        num1=$2
-        num=$(echo "$1" | tr ':' '=')
+        n1=$2
+        n=$(echo "$1" | tr ':' '=')
 
-        result=$(echo "if($num2 > $num1) 1 else 0" | bc)
-	        if ((result == 1)); then
-		        numcp=$num1
-		        num1=$num2
-		        num2=$numcp
+        res=$(echo "if($n2 > $n1) 1 else 0" | bc)
+	        if ((res == 1)); then
+		        numcp=$n1
+		        n1=$n2
+		        n2=$numcp
                 fi
 
-        echo "$num$num1*$num2"
+        echo "$n$n1*$n2"
 }
 
 if [ $# -ne 1 ]
@@ -42,8 +42,8 @@ else
         while read i
         do
 
-                result=$(factor "$i")
-                check_factor $result
+                res=$(factor "$i")
+                check_factor $res
 
         done < "$1"
 fi
