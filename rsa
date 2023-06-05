@@ -1,32 +1,26 @@
-#!/usr/bin/python3
-"""
-Factorize as many numbers as possible into a product of two smaller numbers."""
-# library to get arguments
-import sys
+#!/usr/bin/env bash
+# Factorize as many numbers as possible into a product of two smaller numbers.
 
+while IFS= read -r LINE
+do
+	let FLAG=1
+	let DIV=2
+	while [ $FLAG -eq 1 ]
+	do
+		let REST=$(($LINE%$DIV))
+		if [[ $REST -eq 0 ]]
+		then
+			let NUM=$LINE
+			let COUNT=$(($NUM/$DIV))
+			echo "$LINE=$COUNT*$DIV"
+			let FLAG=0
+		fi
+		let DIV=$(($DIV+1))
+	done
+done < $1
 
-# fn unpack number factorial
-def fc():
-    """fc to search file to convert number and format n=p*q"""
-    try:
-        revfile = sys.argv[1]
-        with open(revfile) as f:
-            for revnumber in f:
-                revnumber = int(revnumber)
-                if revnumber % 2 == 0:
-                        print("{}={}*{}".format(revnumber, revnumber // 2, 2))
-                        continue
-                i = 3
-                while i < revnumber // 2:
-                    if revnumber % i == 0:
-                        print("{}={}*{}".format(revnumber, revnumber // i, i))
-                        break
-                    i = i + 2
-                if i == (revnumber // 2) + 1:
-                    print("{}={}*{}".format(revnumber, revnumber, 1))
-    except (IndexError):
-        pass
+#!/usr/bin/env bash
+# Factorize as many numbers as possible into a product of two smaller numbers.
 
-
-# autostart
-fc()
+gcc factors.c -o a
+./a $1
