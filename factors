@@ -1,49 +1,32 @@
-#!/usr/bin/env bash
-# factors challenge
+#!/usr/bin/python3
+"""Module that factorize as many numbers as possible. """
+from sys import argv
 
-check_factor()
-{
-	if [ $# -ne 3 ];
-        then
-                args=("$@")
-                count=0
-                n2=1
-                for a in ${args[*]};
-                do
-                        if [ $count -gt 1 ];
-                        then
-                                n2=$(echo $a*$n2 | bc)
-                        fi
-                        count=$((count + 1))
-                done
-        else
-                n2=$3
-        fi
 
-        n1=$2
-        n=$(echo "$1" | tr ':' '=')
+def factorize(value):
+    """"A simple descomposition of an integer > 1"""
+    a = 2
 
-        res=$(echo "if($n2 > $n1) 1 else 0" | bc)
-	        if ((res == 1)); then
-		        numcp=$n1
-		        n1=$n2
-		        n2=$numcp
-                fi
+    if val < 2:
+        return
+    print()
+    print(val, "<- value-bef")
+    while val % a:
+        a += 1
+    print("{:.0f}={:.0f}*{:.0f}".format(val, val / a, a))
+    print(val, "<- value-aft")
+    print()
 
-        echo "$n$n1*$n2"
-}
+if len(argv) != 2:
+    exit()
 
-if [ $# -ne 1 ]
-then
-        echo 'Usage: factors <file>'
-        exit 1
-else
+try:
+    with open(argv[1]) as file:
+        line = file.readline()
 
-        while read i
-        do
-
-                res=$(factor "$i")
-                check_factor $res
-
-        done < "$1"
-fi
+        while line != "":
+            value = int(line.split('\n')[0])
+            factorize(val)
+            line = file.readline()
+except:
+    pass
