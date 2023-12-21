@@ -1,20 +1,22 @@
-#!/usr/bin/env bash
+#! /usr/bin/env python3
 # Factorize as many numbers as possible into a product of two smaller numbers.
 
-while IFS= read -r LINE
-do
-	let FLAG=1
-	let DIV=2
-	while [ $FLAG -eq 1 ]
-	do
-		let REST=$(($LINE%$DIV))
-		if [[ $REST -eq 0 ]]
-		then
-			let NUM=$LINE
-			let COUNT=$(($NUM/$DIV))
-			echo "$LINE=$COUNT*$DIV"
-			let FLAG=0
-		fi
-		let DIV=$(($DIV+1))
-	done
-done < $1
+from sys import argv
+
+
+def factorize():
+    with open(argv[1]) as f:
+        for number in f:
+            num = int(number)
+            flags = 0
+            for a in range(2, int(num / 2) + 1, 1):
+                if num % a == 0:
+                    print("{:d}={}*{}".format(num, num // a, a))
+                    flags = 1
+                    break
+            if flag == 0:
+                print("{:d}={}*{}".format(num, num, 1))
+
+
+if __name__ == "__main__":
+    factorize()

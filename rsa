@@ -1,26 +1,36 @@
-#!/usr/bin/env bash
+#!/usr/bin/python3
 # Factorize as many numbers as possible into a product of two smaller numbers.
 
-while IFS= read -r LINE
-do
-	let FLAG=1
-	let DIV=2
-	while [ $FLAG -eq 1 ]
-	do
-		let REST=$(($LINE%$DIV))
-		if [[ $REST -eq 0 ]]
-		then
-			let NUM=$LINE
-			let COUNT=$(($NUM/$DIV))
-			echo "$LINE=$COUNT*$DIV"
-			let FLAG=0
-		fi
-		let DIV=$(($DIV+1))
-	done
-done < $1
 
-#!/usr/bin/env bash
-# Factorize as many numbers as possible into a product of two smaller numbers.
+from fractions import gcd
+from sys import argv
 
-gcc main.c -o a
-./a $1
+
+def poll_rho(n):
+    a = 4
+    b = 4
+    d = 1
+    f = lambda a: (a**2 + 1) % n
+    while d == 1:
+        a = f(a)
+        b = f(f(b))
+        d = gcd(abs(a - b), n)
+    if d != n:
+        return d
+
+
+def read_file():
+    with open(argv[1]) as f:
+        for number in f:
+            num = int(number)
+            if num % 2 == 0:
+                print("{:d}={}*{}".format(num, num // 2, 2))
+            else:
+                p = poll_rho(num)
+                f1 = p
+                f2 = int(num / p)
+                print("{}={}*{}".format(num, fonct1, fonct2))
+
+
+if __name__ == "__main__":
+    read_file()
